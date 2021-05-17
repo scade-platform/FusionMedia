@@ -5,21 +5,21 @@ import FusionMedia_Common
 
 
 public class AudioPlayer {
-  	let url: URL
-  	var player: MediaPlayer? = nil
-  	var localVolume: Float = 1.0
+	let url: URL
+	var player: MediaPlayer? = nil
+	var localVolume: Float = 1.0
    
-  	private var listener: MediaPlayerListener? = nil
+	private var listener: MediaPlayerListener? = nil
   
 	public required init(url: URL) {
-    	self.url = url
-    	self.player = MediaPlayer()
-    	self.listener = MediaPlayerListener()
+		self.url = url
+		self.player = MediaPlayer()
+		self.listener = MediaPlayerListener()
     
-    	self.player?.setVolume(leftVolume: volume, rightVolume: volume)            
-    	self.player?.setOnPreparedListener(listener: listener)
-    	self.player?.setDataSource(path: url.absoluteString)
-    	self.player?.prepareAsync()
+		self.player?.setVolume(leftVolume: volume, rightVolume: volume)            
+		self.player?.setOnPreparedListener(listener: listener)
+		self.player?.setDataSource(path: url.absoluteString)
+		self.player?.prepareAsync()
   	}     
 }
 
