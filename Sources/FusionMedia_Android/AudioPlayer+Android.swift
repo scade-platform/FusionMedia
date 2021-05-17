@@ -7,7 +7,7 @@ import FusionMedia_Common
 public class AudioPlayer {
   	let url: URL
   	var player: MediaPlayer? = nil
-  	var volume: Float = 1.0
+  	var localVolume: Float = 1.0
    
   	private var listener: MediaPlayerListener? = nil
   
@@ -23,7 +23,33 @@ public class AudioPlayer {
   	}     
 }
 
-extension AudioPlayer: AudioPlayerProtocol {    
+extension AudioPlayer: AudioPlayerProtocol {
+    public var isPlaying: Bool {
+        guard let player = player else { return false }  	
+  		return player.isPlaying()
+    }
+    
+    public var duration: Double {
+        guard let player = player else { return 0 }
+        return Double(player.getDuration())
+    }
+    
+    public var currentTime: Double {
+        guard let player = player else { return 0 }
+        return Double(player.getCurrentPosition())
+    }
+    
+    public var volume: Float {
+        get {
+            return self.localVolume
+        }
+        set {
+            guard let player = player else { return }
+        	player.setVolume(leftVolume: newValue, rightVolume: newValue)            
+            self.localVolume = newValue
+        }
+    }
+    
   	public func play() {
     	guard let player = self.player, !player.isPlaying() else { return }
 
@@ -37,34 +63,9 @@ extension AudioPlayer: AudioPlayerProtocol {
     	}
   	}
   
-  	public func isPlaying() -> Bool {
-        guard let player = player else { return false }  	
-  		return player.isPlaying()
-  	}
-  
-    public func getDuration() -> Double {
-        guard let player = player else { return 0 }
-        return Double(player.getDuration())
-    }
-    
-    public func setProgress(_ progress: Float) {
+ 	public func seek(to: Double) {
         guard let player = player else { return }
-        player.seekTo(msec: Int32(Float(self.getDuration()) * progress))
-    }
-      
-    public func getProgress() -> Float {
-    	guard let player = player else { return 0 }
-		return Float(player.getCurrentPosition()) / Float(self.getDuration())
-    }
-    
-    public func setVolume(_ volume: Float) {
-        guard let player = player else { return }
-        player.setVolume(leftVolume: volume, rightVolume: volume)
-        self.volume = volume
-    }
-    
-    public func getVolume() -> Float {
-        return volume
+        player.seekTo(msec: Int32(to))
     }
 }
 
