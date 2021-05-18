@@ -12,8 +12,8 @@ public class AudioPlayer {
 	private var listener: MediaPlayerListener? = nil
   
 	public required init(url: URL) {
-		self.url = url
-		self.player = MediaPlayer()
+	    self.url = url
+	    self.player = MediaPlayer()
 		self.listener = MediaPlayerListener()
     
 		self.player?.setVolume(leftVolume: volume, rightVolume: volume)            
