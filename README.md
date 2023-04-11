@@ -1,6 +1,11 @@
 # FusionMedia
 FusionMedia helps to integrate the media player to play the media files.
 
+<p align="center">
+<img src="images/image3.gif" alt="gif" width="400"/>
+</p>
+
+
 ## Add it to the `Package.swift`
 
 ```swift
